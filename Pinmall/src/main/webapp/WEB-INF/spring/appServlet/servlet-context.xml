@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans:beans xmlns="http://www.springframework.org/schema/mvc"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:beans="http://www.springframework.org/schema/beans"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/mvc https://www.springframework.org/schema/mvc/spring-mvc.xsd
+		http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd">
+
+	<!-- DispatcherServlet Context: defines this servlet's request-processing infrastructure -->
+
+	<!-- Enables the Spring MVC @Controller programming model -->
+	<annotation-driven />
+
+	<!-- Handles HTTP GET requests for /resources/** by efficiently serving up static resources in the ${webappRoot}/resources directory -->
+	<resources mapping="/resources/**" location="/resources/" />
+	
+	
+	<!-- 클라이언트에서 사용가능하기 위한 경로설정 -->
+	<resources mapping="/bower_components/**" location="/resources/bower_components/" />
+	<resources mapping="/dist/**" location="/resources/dist/" />
+	<resources mapping="/plugins/**" location="/resources/plugins/" />
+	<resources mapping="/assets/**" location="/resources/assets/" />
+	
+	
+	<!-- 메인 이미지를 보여주기 위한 경로 -->
+	<resources mapping="/img/**" location="/WEB-INF/view/img/" />
+	
+	<resources mapping="/css/**" location="/WEB-INF/views/css/" />
+	<resources mapping="/vendor/**" location="/WEB-INF/views/vendor/" />
+	
+	<!-- 업로드,CKEditor -->
+	<resources mapping="/ckeditor/**" location="/resources/bower_components/ckeditor/" />
+	<resources mapping="/upload/**" location="/resources/upload/" />
+	
+	<!-- 관리자메인 페이지 -->
+	<resources mapping="/admin/pluginss/**" location="/WEB-INF/views/admin/plugins/" />
+	<resources mapping="/admin/ajax/**" location="/WEB-INF/views/admin/ajax/" />
+	<resources mapping="/admin/csss/**" location="/WEB-INF/views/admin/css/" />
+	<resources mapping="/admin/pluginss/**" location="/WEB-INF/views/admin/plugins/" />
+	<resources mapping="/admin/jss/**" location="/WEB-INF/views/admin/js/" />
+	<resources mapping="/admin/img/**" location="/WEB-INF/views/admin/img/" />
+
+	<!-- 상품관리 -->
+	<resources mapping="/admin/product/pluginss/**" location="/WEB-INF/views/admin/plugins/" />
+	<resources mapping="/admin/product/ajax/**" location="/WEB-INF/views/admin/ajax/" />
+	<resources mapping="/admin/product/csss/**" location="/WEB-INF/views/admin/css/" />
+	<resources mapping="/admin/product/pluginss/**" location="/WEB-INF/views/admin/plugins/" />
+	<resources mapping="/admin/product/jss/**" location="/WEB-INF/views/admin/js/" />
+	<resources mapping="/admin/product/img/**" location="/WEB-INF/views/admin/img/" />	
+
+	<!-- 리뷰관리 -->
+	<resources mapping="/admin/user/pluginss/**" location="/WEB-INF/views/admin/plugins/" />
+	<resources mapping="/admin/user/ajax/**" location="/WEB-INF/views/admin/ajax/" />
+	<resources mapping="/admin/user/csss/**" location="/WEB-INF/views/admin/css/" />
+	<resources mapping="/admin/user/pluginss/**" location="/WEB-INF/views/admin/plugins/" />
+	<resources mapping="/admin/user/jss/**" location="/WEB-INF/views/admin/js/" />
+	<resources mapping="/admin/user/img/**" location="/WEB-INF/views/admin/img/" />
+
+	<!-- 클라이언트로 부터 전송되어 온 파일을 스프링에서 처리하는 기능 -->
+	<!-- MultipartFile file 주입됨 -->
+	<beans:bean id="multipartResolver"
+		class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+		<beans:property name="maxUploadSize" value="10485760" />
+	</beans:bean>
+
+	<!-- 파일 업로드 Path -->
+	<beans:bean id="uploadPath" class="java.lang.String">
+		<beans:constructor-arg value="c:\\dev\\upload"></beans:constructor-arg>
+	</beans:bean>
+
+	<!-- 언터셉터빈객체생성 -->
+	<!-- <beans:bean id="testInterceptor" class="com.pinmall.interceptor.TestInterceptor"></beans:bean> 
+
+	<interceptors>
+		 로그인 확인 
+		<interceptor>
+			<mapping path="/member/loginPost"/>
+			<beans:ref bean="testInterceptor"/> 
+		</interceptor>
+		
+		<interceptor> 가장쉬운 방법
+			<mapping path="/**/"/>
+			<exclude-mapping path="/"/>
+			<exclude-mapping path="/member/login"/>
+			<beans:ref bean="testInterceptor"/>
+		</interceptor>
+		
+		 <interceptor>
+		 	<mapping path="/member/*"/>
+		 	<mapping path="/product/*"/>
+		 	<mapping path="/order/*"/>
+			<beans:ref bean="testInterceptor"/>
+		 </interceptor>
+		 <interceptor>
+		 	<mapping path="/admin/product/*"/>
+			<beans:ref bean="testInterceptor"/>
+		 </interceptor>
+		 
+	</interceptors>
+	-->
+
+
+	<!-- Resolves views selected for rendering by @Controllers to .jsp resources in the /WEB-INF/views directory -->
+	<beans:bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<beans:property name="prefix" value="/WEB-INF/views/" />
+		<beans:property name="suffix" value=".jsp" />
+	</beans:bean>
+	
+	<context:component-scan base-package="com.pinmall.controller" />
+	<context:component-scan base-package="com.pinmall.domain" />
+	<context:component-scan	base-package="com.pinmall.dto" />
+	
+	
+</beans:beans>

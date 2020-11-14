@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pinmall.mappers.ProductMapper">
+
+	<!-- 1차 카테고리 출력 -->
+	<select id="mainCGList" resultType="CategoryVO">
+		select cate_ncategory, cate_pcategory, cate_categoryname from cate_tbl 
+		where cate_pcategory is null
+	</select>
+	
+	<!-- 2차 카테고리 출력 -->
+	<select id="subCGList" resultType="CategoryVO">
+		select cate_ncategory, cate_pcategory, cate_categoryname from cate_tbl
+		where cate_pcategory = #{cate_ncategory}
+	</select>
+	
+	<!-- 카테고리에 해당하는 상품리스트 -->
+	<select id="productListCG" parameterType="Map" resultType="productVO">
+ 		 select pdt_nb, cate_ncategory, pdt_name, pdt_price, pdt_dc, 
+				pdt_company, pdt_detail, pdt_img, pdt_amount, pdt_buy, 
+				PDT_REGDATE, PDT_UPDATE
+		 from	(select pdt_nb, cate_ncategory, pdt_name, pdt_price, pdt_dc, 
+					pdt_company, pdt_detail, pdt_img, pdt_amount, pdt_buy, 
+					PDT_REGDATE, PDT_UPDATE, row_number() over(order by pdt_nb desc) p_seq
+				from product_tbl
+				where cate_ncategory=#{cate_ncategory})
+		 where p_seq between #{rowStart} and #{rowEnd}  
+	</select>
+	
+	<!-- 카테고리명 출력 -->
+	<select id="getCTName" parameterType="String" resultType="String">
+		select cate_categoryname
+		from cate_tbl
+		where cate_ncategory=#{cate_ncategory}
+	</select>
+	
+	<!-- 카테고리에 해당하는 상품개수 -->
+	<select id="productCount" parameterType="string" resultType="int">
+		select count(pdt_nb) 
+		from product_tbl
+		where cate_ncategory = #{cate_ncategory}
+	</select>
+	
+	<!-- 상품카테고리 전체 출력 -->
+	<select id="productList" resultType="productVO">
+		select pdt_nb, cate_ncategory, cate_pcategory, pdt_name, pdt_price, pdt_dc, 
+			   pdt_company, pdt_detail, pdt_img, pdt_amount, pdt_buy
+		from PRODUCT_TBL
+	
+	</select>
+	
+	<!-- 상세정보 읽어오기 -->
+	<select id="productRead" parameterType="int"  resultType="productVO">
+		select  pdt_nb, cate_ncategory, pdt_name, pdt_price, pdt_dc, 
+				pdt_company, pdt_detail, pdt_img, pdt_amount, pdt_buy, 
+				PDT_REGDATE, PDT_UPDATE
+		from product_tbl 
+		where pdt_nb=#{pdt_nb}
+	</select>
+	
+
+</mapper>
+
+

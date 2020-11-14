@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pinmall.mappers.adMemberMapper">
+
+	<!-- 회원정보 가져오기 -->
+	<select id="getMember" resultType="AdMemberVO">
+		select memt_id, memt_name, memt_sname, memt_accept_e, memt_joined, memt_lasttime 
+		from member_tbl
+	</select>
+
+	<!-- 선택한 회원 탈퇴 -->
+	<delete id="deleteMember" parameterType="String">
+		delete from member_tbl 
+		where memt_id=#{memt_id}
+	</delete>
+	
+	<!-- 탈퇴된 회원의 정보들 삭제(장바구니,주문내역,주문상세내역,리뷰) -->
+	<delete id="deleteCart" parameterType="String">
+		delete from cart_tbl
+		where memt_id=#{memt_id}
+	</delete>
+	<delete id="deleteOrder" parameterType="String">
+		delete from order_tbl
+		where memt_id=#{memt_id}
+	</delete>
+	<delete id="deleteOdrDetail" parameterType="String">
+		delete from odr_detail_tbl
+		where memt_id=#{memt_id}
+	</delete>
+	<delete id="deleteRivew" parameterType="String">
+		delete from review_tbl
+		where memt_id=#{memt_id}
+	</delete>
+	
+	<!-- 회원 리뷰 가져오가 -->
+	<select id="getReview" parameterType="Map"	resultType="ReviewVo">
+		select rv_nb,memt_id,pdt_nb,rv_content,rv_score,rv_date   
+		from review_tbl
+	</select>
+	
+	<!-- 회원 리뷰 삭제 -->
+	<delete id="deleteReview" parameterType="String">
+		delete from review_tbl 
+		where rv_nb=#{rv_nb}	
+	</delete>
+	
+</mapper>

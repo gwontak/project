@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pinmall.mappers.CartMapper">
+
+	<!-- 장바구니 리스트 -->
+	<select id="getCart" parameterType="String" resultType="CartProductVO">
+		<![CDATA[
+			select C.cart_code, C.cart_amount, P.pdt_name,P.pdt_nb, P.pdt_price, P.pdt_img
+			from(select cart_code, pdt_nb, memt_id, cart_amount
+				from cart_tbl
+				where memt_id=#{memt_id}) C inner join product_tbl P		
+			on C.pdt_nb = P.pdt_nb
+		]]>
+	</select>
+	
+	<!-- 장바구니 등록 -->
+	<insert id="addCart" parameterType="CartVO">
+		merge into cart_tbl c
+		using dual
+		on (c.memt_id=#{memt_id} and c.pdt_nb=#{pdt_nb})
+		when matched then
+			update set cart_amount = cart_amount + #{cart_amount}
+		when not matched then
+			insert(cart_code, cart_amount, memt_id, pdt_nb)
+			values(seq_cart_code.NEXTVAL,#{cart_amount},#{memt_id},#{pdt_nb})
+	</insert>
+	
+	<!-- 상품수량 변경 -->
+	<update id="cartAmount" parameterType="Map" >
+		update cart_tbl
+		set cart_amount=#{cart_amount}
+		where cart_code=#{cart_code}
+	</update>
+	
+	<!-- 선택상품삭제 -->
+	<delete id="deleteChecked" parameterType="int">
+		delete from cart_tbl
+		where cart_code=#{cart_code}
+	</delete>
+
+	<!-- 장바구니 삭제 -->
+	<delete id="deleteCartOrder" parameterType="String">
+		delete from cart_tbl
+		where memt_id=#{memt_id}
+	</delete>
+</mapper>
