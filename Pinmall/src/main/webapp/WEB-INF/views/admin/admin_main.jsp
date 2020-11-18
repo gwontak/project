@@ -52,7 +52,7 @@
 				</c:if>
 				
 				<c:if test="${sessionScope.admin != null}">
-	        		<li class="nav-item"> 
+	        		<li class="nav-item">
 						<p>
 						${sessionScope.admin.admin_name}님 환영합니다.
 						</p>

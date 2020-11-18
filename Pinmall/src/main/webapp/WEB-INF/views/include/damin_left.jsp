@@ -9,7 +9,7 @@
 		<div id="sidebar-left" class="col-xs-2 col-sm-2">
 			<ul class="nav main-menu">
 				<li>
-					<a href="/admin/adminmain" class="ajax-link">
+					<a href="/admin/adminmain" >
 						<i class="fa fa-dashboard"></i>
 						<span class="hidden-xs">main</span>
 					</a>
@@ -30,7 +30,7 @@
 						 <span class="hidden-xs">주문 관리</span>
 					</a>
 					<ul class="dropdown-menu">
-						<li><a class="ajax-link" href="ajax/tables_simple.html">주문 목록</a></li>
+						<li><a href="/admin/user/OrderList">주문 목록</a></li>
 					</ul>
 				</li>
 				<li class="dropdown">

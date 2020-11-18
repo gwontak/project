@@ -9,8 +9,10 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Repository;
 
 import com.pinmall.domain.AdMemberVO;
-import com.pinmall.domain.AdReviewVO;
+import com.pinmall.domain.AdOrderListVO;
+import com.pinmall.domain.OrderDetailVO;
 import com.pinmall.domain.ReviewVO;
+import com.pinmall.util.AdSearchCriteria;
 
 @Repository
 public class AdMembeDAOImpl implements AdMemberDAO {
@@ -65,5 +67,25 @@ public class AdMembeDAOImpl implements AdMemberDAO {
 	public void deleteReview(int rv_nb) throws Exception {
 		session.delete(NS+".deleteReview", rv_nb);
 	}
+
+	//주문 정보
+	@Override
+	public List<OrderDetailVO> OrderList(AdSearchCriteria cri) throws Exception {
+		return session.selectList(NS+".OrderList",cri);
+	}
+
+	//주문 개수
+	@Override
+	public int AdSearchlistCount(AdSearchCriteria cri) throws Exception {
+		return session.selectOne(NS+".AdSearchlistCount", cri);
+	}
+
+	//주문 상세정보
+	@Override
+	public List<AdOrderListVO> OrderDetailList(int odr_code) throws Exception {
+		return session.selectList(NS+".OrderDetailList",odr_code);
+	}
+
+
 
 }

@@ -45,4 +45,55 @@
 		where rv_nb=#{rv_nb}	
 	</delete>
 	
+	<!-- 주문상세정보 -->
+	<select id="OrderDetailList" parameterType="Map" resultType="AdOrderListVO">
+	  		select o.odr_code,p.pdt_nb ,o.odr_name, o.odr_zipcode, o.odr_add,
+			        o.odr_dadd, o.odr_ph, to_char(o.odr_date,'YYYY/MM/DD') as odr_date,
+					p.pdt_img, p.pdt_name
+			from order_tbl o
+			inner join odr_detail_tbl d
+			    on o.odr_code = d.odr_code
+			inner join product_tbl p
+			    on p.pdt_nb = d.pdt_nb
+	        where o.odr_code=#{odr_code}
+	</select>
+	
+	
+	<!-- 검색 조건 -->
+	<sql id="search">
+		<if test="searchType != null">
+			<!-- 구매자 아이디 -->
+			<if test="searchType == 'id'.toString()">
+				where memt_id like '%' || #{keyword} || '%' 
+			</if>
+			<!-- 상품 번호 -->
+			<if test="searchType == 'code'.toString()">
+				where odr_code like '%' || #{keyword} || '%' 
+			</if>
+			<!-- 상품 번호 + 구매자 아이디 -->
+			<if test="searchType == 'id'.toString()">
+				where (memt_id like '%' || #{keyword} || '%') 
+				or (odr_code like '%' || #{keyword} || '%')
+			</if>
+		</if>
+	</sql>
+	
+	<!-- 주문정보 -->
+	<select id="OrderList" parameterType="AdSearchCriteria" resultType="OrderDetailVO">
+		 select odr_code,pdt_nb,odr_amount,odr_price,memt_id
+		 from (select odr_code,pdt_nb,odr_amount,odr_price,memt_id,
+		 		row_number() over (order by pdt_nb desc) p_seq from odr_detail_tbl
+	        	<include refid="search" /> )
+	     where p_seq between #{rowStart} and #{rowEnd}
+	</select>
+	
+	<!-- 주문 개수 -->
+	<select id="AdSearchlistCount" parameterType="AdSearchCriteria" resultType="int">
+		<![CDATA[
+			select count(odr_code)
+			from odr_detail_tbl
+		]]>
+		<include refid="search" />
+	</select>
+		
 </mapper>

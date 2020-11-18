@@ -8,8 +8,11 @@ import javax.inject.Inject;
 import org.springframework.stereotype.Service;
 
 import com.pinmall.domain.AdMemberVO;
+import com.pinmall.domain.AdOrderListVO;
+import com.pinmall.domain.OrderDetailVO;
 import com.pinmall.domain.ReviewVO;
 import com.pinmall.persistance.AdMemberDAO;
+import com.pinmall.util.AdSearchCriteria;
 
 
 @Service
@@ -64,9 +67,23 @@ public class AdMemberServiceImpl implements AdMemberService {
 		dao.deleteReview(rv_nb);
 	}
 
-	
-	
-	
-	
+	//주문 정보
+	@Override
+	public List<OrderDetailVO> OrderList(AdSearchCriteria cri) throws Exception {
+		return dao.OrderList(cri);
+	}
+
+	//주문 개수
+	@Override
+	public int AdSearchlistCount(AdSearchCriteria cri) throws Exception {
+		return dao.AdSearchlistCount(cri);
+	}
+
+	//주문 상세정보
+	@Override
+	public List<AdOrderListVO> OrderDetailList(int odr_code) throws Exception {
+		return dao.OrderDetailList(odr_code);
+	}
+
 
 }

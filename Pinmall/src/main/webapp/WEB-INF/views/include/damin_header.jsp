@@ -13,7 +13,6 @@
 				<div class="row">
 					<div class="col-xs-8 col-sm-4">
 						<div id="search">
-							<input type="text" placeholder="search"/>
 							<i class="fa fa-search"></i>
 						</div>
 					</div>

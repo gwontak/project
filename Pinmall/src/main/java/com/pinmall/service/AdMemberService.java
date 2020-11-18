@@ -4,7 +4,10 @@ import java.util.List;
 import java.util.Map;
 
 import com.pinmall.domain.AdMemberVO;
+import com.pinmall.domain.AdOrderListVO;
+import com.pinmall.domain.OrderDetailVO;
 import com.pinmall.domain.ReviewVO;
+import com.pinmall.util.AdSearchCriteria;
 
 public interface AdMemberService {
 
@@ -28,5 +31,13 @@ public interface AdMemberService {
 	
 	//회원 리뷰 삭제
 	public void deleteReview(int rv_nb) throws Exception;
-		
+	
+	//주문정보
+	public List<OrderDetailVO> OrderList(AdSearchCriteria cri) throws Exception;
+	
+	//주문 개수
+	public int AdSearchlistCount(AdSearchCriteria cri) throws Exception;
+	
+	//주문 상세정보
+	public List<AdOrderListVO> OrderDetailList(int odr_code) throws Exception;
 }

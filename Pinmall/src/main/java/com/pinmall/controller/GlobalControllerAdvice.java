@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ModelAttribute;
 
 import com.pinmall.service.ProductService;
-import com.pinmall.util.PageMaker;
 
 @ControllerAdvice(basePackages = {"com.pinmall.controller"})
 public class GlobalControllerAdvice {
@@ -29,6 +28,7 @@ public class GlobalControllerAdvice {
 	@ModelAttribute
 	public void productMainList(Model model) throws Exception{
 
+		logger.info("상품리스트 출력");
 		model.addAttribute("productAll",  service.productList());
 		
 		

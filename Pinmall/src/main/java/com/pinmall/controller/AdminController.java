@@ -6,6 +6,7 @@ import javax.servlet.http.HttpSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -25,8 +26,8 @@ public class AdminController {
 	
 	//관리자 메인
 	@RequestMapping(value = "adminmain",method = RequestMethod.GET)
-	public String adminMain() throws Exception{
-			logger.info("관리자 메인 페이지");
+	public String adminMain(Model model) throws Exception{
+			
 		return "/admin/admin_main";
 	}
 	
@@ -45,9 +46,12 @@ public class AdminController {
 		vo = service.login(dto);
 		String msg = "";
 		
+		
 		if(vo != null) {
 			
 			session.setAttribute("admin", vo);
+			
+			logger.info("session : " + session.toString());
 			msg = "LOGIN_SUCCESS";
 		} else {
 			msg = "LOGIN_FAIL";

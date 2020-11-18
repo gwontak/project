@@ -26,6 +26,7 @@ public class AdminDAOImpl implements AdminDAO {
 	public void loginUpdate(String admin_id) throws Exception {
 		session.update(NS+".loginUpdate", admin_id);
 	}
+	
 
 
 }

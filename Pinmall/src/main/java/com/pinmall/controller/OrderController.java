@@ -64,12 +64,12 @@ public class OrderController {
 	
 	//상품구매POST
 	@RequestMapping(value = "order",method = RequestMethod.POST)
-	public String orderPOST(OrderVO order,OrderDetailVOList oderDetailList,String memt_id) throws Exception{
+	public String orderPOST(OrderVO order,OrderDetailVOList oderDetailList,String memt_id,HttpSession session) throws Exception{
 		
 		logger.info("삼품구매POST"+order+oderDetailList+memt_id);
 		
-		
-		service.addOrder(order, oderDetailList, memt_id);
+		MemberDTO dto = (MemberDTO) session.getAttribute("user");
+		service.addOrder(order, oderDetailList, dto.getMemt_id());
 		
 		
 		return "/order/orderComplete";

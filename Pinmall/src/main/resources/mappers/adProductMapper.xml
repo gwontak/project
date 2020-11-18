@@ -102,6 +102,4 @@
 		where pdt_nb=#{pdt_nb}	
 	</update>
 	
-	
-	
 </mapper>

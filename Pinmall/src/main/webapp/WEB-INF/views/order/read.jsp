@@ -108,7 +108,6 @@ ul{
 								<th>주소</th>
 								<th></th>
 								<th>핸드폰번호</th>
-								<th>총가격</th>
 								<th>주문 날짜</th>
 							</tr>
 						</thead>
@@ -130,9 +129,6 @@ ul{
 								 <td>
 									<p>${order.odr_ph}</p>
 								 </td>
-								<td>
-									<p>${order.odr_totalby}</p>
-								</td>
 								<td>
 									<p><fmt:formatDate pattern="yyyy년MM월dd일" value="${order.odr_date}" /></p>
 								</td>

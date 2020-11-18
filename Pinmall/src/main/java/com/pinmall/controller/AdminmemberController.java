@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.annotation.Resource;
 import javax.inject.Inject;
 
 import org.slf4j.Logger;
@@ -12,14 +13,20 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.pinmall.domain.AdReviewVO;
+import com.pinmall.domain.AdOrderListVO;
 import com.pinmall.domain.ReviewVO;
 import com.pinmall.service.AdMemberService;
+import com.pinmall.util.AdPageMaker;
+import com.pinmall.util.AdSearchCriteria;
+import com.pinmall.util.FileUtils;
 
 @Controller
 @RequestMapping("/admin/user/*")
@@ -30,6 +37,8 @@ public class AdminmemberController {
 	
 	private static final Logger logger = LoggerFactory.getLogger(AdminmemberController.class);
 	
+	@Resource(name = "uploadPath")
+	private String uploadPath;
 	
 	//회원관리
 	@RequestMapping(value = "member",method = RequestMethod.GET)
@@ -87,7 +96,7 @@ public class AdminmemberController {
 	//리뷰삭제
 	@ResponseBody
 	@RequestMapping(value = "deleteReview", method = RequestMethod.POST)
-	public ResponseEntity<String> deleteReview(AdReviewVO vo,@RequestParam("checkArr[]") List<Integer> checkArr) throws Exception{
+	public ResponseEntity<String> deleteReview(AdOrderListVO vo,@RequestParam("checkArr[]") List<Integer> checkArr) throws Exception{
 		
 		
 		logger.info("리뷰 삭제 : " + checkArr);
@@ -109,4 +118,50 @@ public class AdminmemberController {
 		
 		return entity;
 	}
+	
+	
+	//주문정보
+	@RequestMapping(value = "OrderList",method = RequestMethod.GET)
+	public void OrderList(@ModelAttribute("cri") AdSearchCriteria cri,Model model, RedirectAttributes redirect) throws Exception{
+		
+		logger.info("주문정보 진행"+cri.toString());
+		
+		model.addAttribute("list", service.OrderList(cri));
+		
+		AdPageMaker pm = new AdPageMaker();
+		pm.setCri(cri);
+		
+		int Count = service.AdSearchlistCount(cri);
+		pm.setTotalCount(Count);
+
+		model.addAttribute("pm", pm);
+	}
+	
+	//주문 상세정보 출력
+	@ResponseBody
+	@RequestMapping(value = "subOrCode/{odr_code}", method = RequestMethod.GET)
+	public ResponseEntity<List<AdOrderListVO>> subCGList(@PathVariable("odr_code") int odr_code){
+		
+		logger.info("상세정보 출력");
+		
+		ResponseEntity<List<AdOrderListVO>> entity = null;
+		try {
+			
+			entity = new ResponseEntity<List<AdOrderListVO>>(service.OrderDetailList(odr_code),HttpStatus.OK);
+			logger.info(entity.toString());
+		}catch(Exception ex) {
+			entity = new ResponseEntity<List<AdOrderListVO>>(HttpStatus.BAD_REQUEST);
+		}
+		
+		return entity;
+	}
+	
+	//파일 출력
+	@ResponseBody
+	@RequestMapping(value = "displayFile",method = RequestMethod.GET)
+	public ResponseEntity<byte[]> displayFile(String fileName) throws Exception{
+		
+		return FileUtils.getFile(uploadPath, fileName);
+	}
+	
 }
