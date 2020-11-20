@@ -117,9 +117,6 @@ li{
     <!-- /.row -->
         </div>
   </div>
-  <!-- /.container -->
-  </div>
-  </div>
 
   <!-- Footer(하단) -->
  <%@ include file="/WEB-INF/views/include/footer.jsp" %>

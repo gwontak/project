@@ -33,22 +33,69 @@
 		where memt_id=#{memt_id}
 	</delete>
 	
-	<!-- 회원 리뷰 가져오가 -->
-	<select id="getReview" parameterType="Map"	resultType="ReviewVo">
-		select rv_nb,memt_id,pdt_nb,rv_content,rv_score,rv_date   
-		from review_tbl
-	</select>
-	
 	<!-- 회원 리뷰 삭제 -->
 	<delete id="deleteReview" parameterType="String">
 		delete from review_tbl 
 		where rv_nb=#{rv_nb}	
 	</delete>
+
+		<!-- 주문 정보 검색 조건 -->
+	<sql id="rvsearch">
+		<if test="searchType != null">
+			<!-- 회원 아이디 -->
+			<if test="searchType == 'id'.toString()">
+				where memt_id like '%' || #{keyword} || '%' 
+			</if>
+			<!-- 상품 번호 -->
+			<if test="searchType == 'pdt'.toString()">
+				where pdt_nb like '%' || #{keyword} || '%' 
+			</if>
+			<!-- 리뷰 번호 -->
+			<if test="searchType == 'review'.toString()">
+				where rv_nb like '%' || #{keyword} || '%' 
+			</if>
+			<!-- 회원 아이디 + 리뷰 번호 -->
+			<if test="searchType == 'id_review'.toString()">
+				where (memt_id like '%' || #{keyword} || '%') 
+				or (rv_nb like '%' || #{keyword} || '%')
+			</if>
+			<!-- 회원 아이디 + 상품 번호 -->
+			<if test="searchType == 'id_pdt'.toString()">
+				where (memt_id like '%' || #{keyword} || '%') 
+				or (pdt_nb like '%' || #{keyword} || '%')
+			</if>
+			<!-- 회원 아이디 + 상품 번호  + 리뷰 번호-->
+			<if test="searchType == 'all'.toString()">
+				where (memt_id like '%' || #{keyword} || '%') 
+				or (pdt_nb like '%' || #{keyword} || '%')
+				or (rv_nb like '%' || #{keyword} || '%')
+			</if>
+		</if>
+	</sql>		
+	
+	<!-- 회원 리뷰 가져오기 -->
+	<select id="getReview" parameterType="AdSearchCriteria"	resultType="ReviewVo">
+		select rv_nb,memt_id,pdt_nb,rv_content,rv_score,rv_date 
+		from (select rv_nb,memt_id,pdt_nb,rv_content,rv_score,rv_date,
+				row_number() over (order by pdt_nb desc) p_seq from review_tbl
+				 <include refid="rvsearch" />)
+		where p_seq between #{rowStart} and #{rowEnd}	 
+	</select>
+		
+	<!-- 리뷰 개수 -->
+	<select id="ReviewCount" parameterType="AdsearchCriteria" resultType="int">
+		<![CDATA[
+			select count(rv_nb)
+			from review_tbl
+		]]>
+		<include refid="rvsearch"></include>
+	</select>	
+
 	
 	<!-- 주문상세정보 -->
 	<select id="OrderDetailList" parameterType="Map" resultType="AdOrderListVO">
 	  		select o.odr_code,p.pdt_nb ,o.odr_name, o.odr_zipcode, o.odr_add,
-			        o.odr_dadd, o.odr_ph, to_char(o.odr_date,'YYYY/MM/DD') as odr_date,
+			        o.odr_dadd,o.odr_totalby, o.odr_ph, to_char(o.odr_date,'YYYY/MM/DD') as odr_date,
 					p.pdt_img, p.pdt_name
 			from order_tbl o
 			inner join odr_detail_tbl d
@@ -59,7 +106,7 @@
 	</select>
 	
 	
-	<!-- 검색 조건 -->
+	<!-- 주문 정보 검색 조건 -->
 	<sql id="search">
 		<if test="searchType != null">
 			<!-- 구매자 아이디 -->
@@ -95,5 +142,7 @@
 		]]>
 		<include refid="search" />
 	</select>
+		
+
 		
 </mapper>

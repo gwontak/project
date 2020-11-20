@@ -11,6 +11,7 @@ public class AdOrderListVO {
 	private	String odr_dadd;
 	private String pdt_img;
 	private String pdt_name;
+	private String odr_totalby;
 	private String odr_date;
 	
 	public int getOdr_code() {
@@ -67,13 +68,22 @@ public class AdOrderListVO {
 	public void setOdr_date(String odr_date) {
 		this.odr_date = odr_date;
 	}
+	public String getOdr_totalby() {
+		return odr_totalby;
+	}
+	public void setOdr_totalby(String odr_totalby) {
+		this.odr_totalby = odr_totalby;
+	}
 	
 	@Override
 	public String toString() {
 		return "AdOrderListVO [odr_code=" + odr_code + ", odr_ph=" + odr_ph + ", odr_name=" + odr_name
 				+ ", odr_zipcode=" + odr_zipcode + ", odr_add=" + odr_add + ", odr_dadd=" + odr_dadd + ", pdt_img="
-				+ pdt_img + ", pdt_name=" + pdt_name + ", odr_date=" + odr_date + "]";
+				+ pdt_img + ", pdt_name=" + pdt_name + ", odr_totalby=" + odr_totalby + ", odr_date=" + odr_date + "]";
 	}
+	
+	
+	
 	
 	
 }

@@ -48,13 +48,14 @@ ul{
 	<!-- Page left (왼쪽) -->
     <%@ include file="/WEB-INF/views/include/left.jsp" %>
 
-     <div class="col-lg-9">
+    <div class="col-lg-9">
+     <div class="container no-gutter">
+	 	<div class="row no-gutter2 row-no-gutter">
+	       <div class="col-xs-12">
 				<h1 class="my-4">
 					장바구니
 				</h1>
-		<div class="container">
-			<div class="web-cart row no-gutter2 row-no-gutter">
-				<div class="col-md-12">
+			</div>
 				<form method="post" action="/order/buyFromCart">
 					<div class="btn-container" style="display: inline-block; float: right; margin:20px 10px 5px 5px;">
 							<button id="btn_buy"  class="btn btn-primary" type="submit" >선택 상품 구매</button>
@@ -111,6 +112,7 @@ ul{
 						</c:forEach>
 					</table>
 				</form>
+				</div>
 					<table>	
 							<tr>
 								<td colspan="5" class="text-left" style="text-align:left;"></td>
@@ -123,18 +125,9 @@ ul{
 					</table>
 				
 				</div>
-
-
 				</div>
 			</div>
-		</div>
-	<div class="gap"></div>
-      <!-- /.col-lg-9 -->
-
-    </div>
-    <!-- /.row -->
-        </div>
-  <!-- /.container -->
+			</div>
 
 
   <!-- Footer(하단) -->

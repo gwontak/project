@@ -1,8 +1,6 @@
 package com.pinmall.controller;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import javax.annotation.Resource;
 import javax.inject.Inject;
@@ -19,10 +17,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.pinmall.domain.AdOrderListVO;
-import com.pinmall.domain.ReviewVO;
 import com.pinmall.service.AdMemberService;
 import com.pinmall.util.AdPageMaker;
 import com.pinmall.util.AdSearchCriteria;
@@ -80,15 +76,21 @@ public class AdminmemberController {
 	
 	//리뷰게시판(get)
 	@RequestMapping(value = "Review", method = RequestMethod.GET)
-	public void getReview(Model model) throws Exception{
+	public void getReview(@ModelAttribute("cri") AdSearchCriteria cri,Model model) throws Exception{
 		
 		logger.info("리뷰게시판");
 		
-		Map<String, Object> map = new HashMap<String, Object>();
 		
-		List<ReviewVO> list = service.getReview(map);
-		model.addAttribute("list", list);
+		model.addAttribute("list", service.getReview(cri));
 		
+		AdPageMaker pm = new AdPageMaker();
+		pm.setCri(cri);
+		
+		
+		int count = service.ReviewCount(cri);
+		pm.setTotalCount(count);
+		
+		model.addAttribute("pm", pm);
 		
 	}
 	
@@ -122,11 +124,12 @@ public class AdminmemberController {
 	
 	//주문정보
 	@RequestMapping(value = "OrderList",method = RequestMethod.GET)
-	public void OrderList(@ModelAttribute("cri") AdSearchCriteria cri,Model model, RedirectAttributes redirect) throws Exception{
+	public void OrderList(@ModelAttribute("cri") AdSearchCriteria cri,Model model) throws Exception{
 		
 		logger.info("주문정보 진행"+cri.toString());
 		
 		model.addAttribute("list", service.OrderList(cri));
+		logger.info("주문정보 진행"+model.toString());
 		
 		AdPageMaker pm = new AdPageMaker();
 		pm.setCri(cri);

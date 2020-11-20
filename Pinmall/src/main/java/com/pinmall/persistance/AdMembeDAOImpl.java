@@ -1,7 +1,6 @@
 package com.pinmall.persistance;
 
 import java.util.List;
-import java.util.Map;
 
 import javax.inject.Inject;
 
@@ -58,8 +57,8 @@ public class AdMembeDAOImpl implements AdMemberDAO {
 
 	//회원 리뷰 가져오기
 	@Override
-	public List<ReviewVO> getReview(Map map) throws Exception {
-		return session.selectList(NS+".getReview", map);
+	public List<ReviewVO> getReview(AdSearchCriteria cri) throws Exception {
+		return session.selectList(NS+".getReview", cri);
 	}
 
 	//회원 리뷰 삭제
@@ -84,6 +83,11 @@ public class AdMembeDAOImpl implements AdMemberDAO {
 	@Override
 	public List<AdOrderListVO> OrderDetailList(int odr_code) throws Exception {
 		return session.selectList(NS+".OrderDetailList",odr_code);
+	}
+
+	@Override
+	public int ReviewCount(AdSearchCriteria cri) throws Exception {
+		return session.selectOne(NS+".ReviewCount", cri);
 	}
 
 

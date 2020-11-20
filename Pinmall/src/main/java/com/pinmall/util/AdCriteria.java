@@ -10,7 +10,7 @@ public class AdCriteria {
 	
 	public AdCriteria(){
 		this.page = 1;
-		this.perPageNum = 5;
+		this.perPageNum = 3;
 	}
 
 	

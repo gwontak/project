@@ -2,6 +2,7 @@ package com.pinmall.interceptor;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
@@ -17,7 +18,15 @@ public class TestInterceptor extends HandlerInterceptorAdapter {
 		// 관리자 로그인 세션여부 체크
 		// 1)정상로그인 상태 : return true;
 		// 2)로그인 상태가 아님 : 관리자로그인 주소이동작업 return false;
-		return super.preHandle(request, response, handler);
+		
+		HttpSession session = request.getSession();
+		System.out.println(session.toString());
+		Object obj = session.getAttribute("user");
+		if( obj == null) {
+				response.sendRedirect("/member/login");
+				return false;
+		}
+		return true;
 	}
 
 	@Override

@@ -56,7 +56,11 @@
 	<resources mapping="/admin/user/pluginss/**" location="/WEB-INF/views/admin/plugins/" />
 	<resources mapping="/admin/user/jss/**" location="/WEB-INF/views/admin/js/" />
 	<resources mapping="/admin/user/img/**" location="/WEB-INF/views/admin/img/" />
-
+	
+	
+	<!-- 차트 -->
+	<resources mapping="/chart/**" location="/resources/chart/" />
+	
 	<!-- 클라이언트로 부터 전송되어 온 파일을 스프링에서 처리하는 기능 -->
 	<!-- MultipartFile file 주입됨 -->
 	<beans:bean id="multipartResolver"
@@ -70,35 +74,27 @@
 	</beans:bean>
 
 	<!-- 언터셉터빈객체생성 -->
-	<!-- <beans:bean id="testInterceptor" class="com.pinmall.interceptor.TestInterceptor"></beans:bean> 
+	 <beans:bean id="TestInterceptor" class="com.pinmall.interceptor.TestInterceptor"></beans:bean> 
 
 	<interceptors>
-		 로그인 확인 
-		<interceptor>
-			<mapping path="/member/loginPost"/>
-			<beans:ref bean="testInterceptor"/> 
-		</interceptor>
 		
-		<interceptor> 가장쉬운 방법
+		<!-- 가장쉬운 방법 사용x 문제있음
+		<interceptor> 
 			<mapping path="/**/"/>
 			<exclude-mapping path="/"/>
 			<exclude-mapping path="/member/login"/>
 			<beans:ref bean="testInterceptor"/>
 		</interceptor>
+		-->
 		
 		 <interceptor>
-		 	<mapping path="/member/*"/>
-		 	<mapping path="/product/*"/>
-		 	<mapping path="/order/*"/>
-			<beans:ref bean="testInterceptor"/>
-		 </interceptor>
-		 <interceptor>
-		 	<mapping path="/admin/product/*"/>
-			<beans:ref bean="testInterceptor"/>
+		 	<mapping path="/order/buy"/>
+		 	<mapping path="/cart/*"/>
+			<beans:ref bean="TestInterceptor"/>
 		 </interceptor>
 		 
 	</interceptors>
-	-->
+	
 
 
 	<!-- Resolves views selected for rendering by @Controllers to .jsp resources in the /WEB-INF/views directory -->

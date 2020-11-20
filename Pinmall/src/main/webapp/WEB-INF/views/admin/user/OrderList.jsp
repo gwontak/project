@@ -30,20 +30,20 @@
 <script id="subCGLISTTemplate" type="text/x-handlebars-template">
 	{{#each .}}
 	<div class="delete">
-	<table class="table table-striped text-center">
-		<thead>
+		<table class="table table-striped text-center" >
+		  <thead>
 			<tr>
-				<th  style="width: 10%">선택한 번호</th>
+				<th>선택한 번호</th>
 				<th>상품 이미지</th>
 				<th>상품 이름</th>
 				<th>구매자 이름</th>
 				<th>주 소</th>
 				<th>핸드폰 번호</th>
+				<th>주문 가격</th>
 				<th>주문 날짜</th>
 			</tr>
-		</thead>
-		<tbody>
-		
+		  </thead>
+		  <tbody>
 		<c:forEach items="list">
 			<tr>
 				<td style="width: 10%">{{odr_code}}</td>
@@ -68,14 +68,17 @@
 				<td>
 					<p>{{odr_ph}}</p> 
 				</td>
+				<td>
+					<p>{{odr_totalby}}</p> 
+				</td>
 				<td >
 					<p>{{odr_date}}</p>
 				</td>
 			</tr>
 		</c:forEach>
-	</tbody>
-	</table>
-</div>
+		</tbody>	
+	 </table>
+	</div>
 	{{/each}}
 </script>
 <script>
@@ -104,9 +107,8 @@ $(document).ready(function(){
 	//주문상세 내용
 	$(".odr_code").on("click", function(){
 		var	mainOrCode = $(this).val();
-		var curtr = $(this).parent().parent().parent().parent();
+		var curtr = $(".odr_code").parent().parent().parent().parent();
 		var url ="/admin/user/subOrCode/" + mainOrCode;
-		alert(url);
 		
 		$.getJSON(url, function(data){
 			
@@ -142,9 +144,9 @@ $(document).ready(function(){
 								<option value="id"
 									<c:out value="${cri.searchType eq 'id'?'selected':''}" />>구매자 아이디</option>	
 								<option value="code"
-									<c:out value="${cri.searchType eq 'code'?'selected':''}" />>상품 번호</option>
+									<c:out value="${cri.searchType eq 'code'?'selected':''}" />>주문 번호</option>
 								<option value="id_code"
-									<c:out value="${cri.searchType eq 'id_code'?'selected':''}" />>구매자 아이디 + 상품 번호</option>
+									<c:out value="${cri.searchType eq 'id_code'?'selected':''}" />>구매자 아이디 + 주문 번호</option>
 							</select>
 							<input type="text" name='keyword' id="keyword" style="width:250px; height:30pt; padding-left:5px;" value='${cri.keyword}' />
 							<button id="btn_search" class="btn btn-default">검색</button>
@@ -152,46 +154,54 @@ $(document).ready(function(){
 						<div class="box" style="border: none;">
 						<div class="box-body">
 						<table class="table table-striped text-center" >
-						<thead>
-							<tr>
-								<th>주문 번호</th>
-								<th></th>
-								<th>구매자 아이디</th>
-								<th></th>
-								<th>구매 수량</th>
-								<th>주문 가격</th>
-							</tr>
-	
-						</thead>
-						<tbody>
-						
-						<!-- 상품이 존재할 경우 -->
-						<c:forEach items="${list}" var="list">
-							<tr>
-								<td style="width: 10%">
-									<input type="button" style="width: 40px; " class="odr_code" value="${list.odr_code}"/> 
-								</td>
-								<td >
-									<p></p> 
-								</td>
-								<td>
-									<input type="hidden"  name="memt_id" value="${list.memt_id }">
-									<input type="hidden"  name="pdt_nb_${list.odr_code}" value="${list.pdt_nb}">
-									<p>${list.memt_id }</p>
-								</td>
-								<td >
-									<p></p> 
-								</td>
-								<td>
-									<p>${list.odr_amount}</p> 
-								</td>
-								<td >
-									<p>${list.odr_price}</p> 
-								</td>
-							</tr>
-		
-						</c:forEach>	
-					</tbody>
+								<thead>
+									<tr>
+										<th>주문 번호</th>
+										<th></th>
+										<th style="text-align: center;">구매자 아이디</th>
+										<th></th>
+										<th style="text-align: center;">구매 수량</th>
+										<th></th>
+									</tr>
+								</thead>
+							<tbody>
+
+							<!-- 상품이 존재하지 않는 경우 -->
+						    <c:if test="${empty list}">
+								<tr>
+								<td colspan='6'>작성된 리뷰가 없습니다.</td>
+								</tr>
+							</c:if>
+
+								<!-- 상품이 존재할 경우 -->
+							
+							<c:forEach items="${list}" var="list">
+									<tr>
+										<td style="width: 10%">
+											<input type="button" style="width: 40px; " class="odr_code" value="${list.odr_code}"/> 
+										</td>
+										<td >
+											<p></p> 
+										</td>
+										<td>
+											<input type="hidden"  name="memt_id" value="${list.memt_id }">
+											<input type="hidden"  name="pdt_nb_${list.odr_code}" value="${list.pdt_nb}">
+											<p>${list.memt_id }</p>
+										</td>
+										<td >
+											<p></p> 
+										</td>
+										<td>
+											<p>${list.odr_amount}</p> 
+										</td>
+										<td>
+											<p></p>
+										</td>
+									</tr>
+									<tr id="sublist_${list.odr_code}">
+									</tr>
+							</c:forEach>
+						</tbody>
 					</table>
 
 
@@ -209,7 +219,7 @@ $(document).ready(function(){
 								<!-- 페이지 번호 -->
 								<c:forEach begin="${pm.startPage}" end="${pm.endPage}" var="idx">
 									<li<c:out value="${pm.cri.page == idx?'class = active':''}" />>
-										<a href="list${pm.makeSearch(idx)}">${idx}</a>																				
+										<a href="OrderList${pm.makeSearch(idx)}">${idx}</a>																				
 									</li>
 								</c:forEach>
 								

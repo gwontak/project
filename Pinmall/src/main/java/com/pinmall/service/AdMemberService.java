@@ -1,7 +1,6 @@
 package com.pinmall.service;
 
 import java.util.List;
-import java.util.Map;
 
 import com.pinmall.domain.AdMemberVO;
 import com.pinmall.domain.AdOrderListVO;
@@ -27,7 +26,7 @@ public interface AdMemberService {
 	public void deleteRivew(String memt_id) throws Exception;
 	
 	//회원 리뷰 가져오기
-	public List<ReviewVO> getReview(Map map) throws Exception;
+	public List<ReviewVO> getReview(AdSearchCriteria cri) throws Exception;
 	
 	//회원 리뷰 삭제
 	public void deleteReview(int rv_nb) throws Exception;
@@ -40,4 +39,7 @@ public interface AdMemberService {
 	
 	//주문 상세정보
 	public List<AdOrderListVO> OrderDetailList(int odr_code) throws Exception;
+	
+	//리뷰 개수
+	public int ReviewCount(AdSearchCriteria cri) throws Exception;
 }
