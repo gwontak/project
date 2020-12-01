@@ -1,7 +1,6 @@
 package com.pinmall.controller;
 
 import javax.inject.Inject;
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
@@ -42,8 +41,7 @@ public class MemberController {
 	
 	//로그인(POST)
 	@RequestMapping(value = "loginPOST",method = RequestMethod.POST)
-	public String loginPOST(MemberDTO dto,RedirectAttributes redirect,HttpSession session,
-			Model model, HttpServletRequest response) throws Exception{
+	public String loginPOST(MemberDTO dto,RedirectAttributes redirect,HttpSession session) throws Exception{
 		logger.info(dto.toString());
 		
 		MemberDTO memDTO = service.login(dto);
