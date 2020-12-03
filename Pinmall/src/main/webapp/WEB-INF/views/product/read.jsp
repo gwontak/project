@@ -153,6 +153,15 @@
         color: black;
     }
 
+	.pt-5, .py-5 {
+	
+	   width:100%;
+	   height:100px;
+	   position:absolute;
+	   bottom:0;
+	   text-align: center;
+	
+	}
 </style>
 	
 </head>
@@ -161,7 +170,7 @@
 
       <!-- Navigation(상단) -->
 	<%@ include file="/WEB-INF/views/include/top.jsp" %>
-<div class="container">
+	<div class="container">
     <div class="row">
 	    		<!-- Page left (왼쪽) -->
     <%@ include file="/WEB-INF/views/include/left.jsp" %>
@@ -274,20 +283,19 @@
 	            	</div>
 	            </div>
           </div>
-		   
+	 	
+	    <!-- /.row -->
           </div>
+        <div class="row">
         </div>
-        
-        <!-- /.row -->
+        <!-- /.col-lg-9 -->
+		</div>
 	
+      <!-- /.row -->
       </div>
-      <!-- /.col-lg-9 -->
-
-    </div>
-    <!-- /.row -->
-
+      
   <!-- /.container -->
-
+	</div>	
   <!-- Footer(하단) -->
  <%@ include file="/WEB-INF/views/include/footer.jsp" %>
 

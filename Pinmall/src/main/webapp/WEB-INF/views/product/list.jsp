@@ -36,10 +36,14 @@ ul{
    text-align: left;
 
 	}
+.pt-5, .py-5 {
 
-li{
+   width:100%;
+   height:100px;
+   position:absolute;
+   bottom:0;
+   text-align: center;
 
-	padding-left:50px;
 }
 
 </style>
@@ -57,7 +61,6 @@ li{
 
 
   
-      <!-- /.col-lg-3 -->
 
       <div class="col-lg-9">
 				<h1 class="my-4">
@@ -65,8 +68,7 @@ li{
 				</h1>
  
 
-        <div class="row">
-	
+		 
 		<c:forEach items="${productList}" var="productVO">
           <div class="col-lg-4 col-md-6 mb-4">
             <div class="card h-100">
@@ -79,18 +81,16 @@ li{
                 </h4>
                 <p>가격: <fmt:formatNumber value="${productVO.pdt_price}" pattern="###,###,###" />원
               </div>
-              <div class="card-footer">
-                <small class="text-muted">&#9733; &#9733; &#9733; &#9733; &#9734;</small>
-              </div>
             </div>
           </div>
 		</c:forEach>
-
+		
 
         <!-- /.row -->
+        <div class="row">
 	<!-- 페이지 표시 -->
-      </div>
- 			<div class="box-footer">
+		<div style="width: 100%;">
+ 			<div class="box-footer" style="padding-left: 50%">
 				<div class="text-center">
 					<ul class="pagination">
 					 	<c:if test="${pm.prev}">
@@ -110,13 +110,20 @@ li{
 			 	</c:if>
 			 </ul>
 			</div>
-	      </div>     
-      <!-- /.col-lg-9 -->
-
-    </div>
+	      </div>
+	      </div>    
+	       
+	    <!-- /.row -->
+		</div>
+		
+	  <!-- /.col-lg-9 -->	
+	   </div>
+	
     <!-- /.row -->
-        </div>
-  </div>
+    </div>
+
+<!-- /.container -->
+ </div>
 
   <!-- Footer(하단) -->
  <%@ include file="/WEB-INF/views/include/footer.jsp" %>

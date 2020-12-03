@@ -52,7 +52,15 @@ ul{
    padding-left:0px;
    text-align: left;
    }
+.pt-5, .py-5 {
 
+   width:100%;
+   height:100px;
+   position:absolute;
+   bottom:0;
+   text-align: center;
+
+}
 </style>
 	
 </head>
@@ -61,14 +69,13 @@ ul{
 
       <!-- Navigation(상단) -->
 	<%@ include file="/WEB-INF/views/include/top.jsp" %>
-<div class="container">
+	<div class="container">
     <div class="row">
 	    		<!-- Page left (왼쪽) -->
     <%@ include file="/WEB-INF/views/include/left.jsp" %>
 
 
   
-      <!-- /.col-lg-3 -->
 
       <div class="col-lg-9">
       
@@ -120,17 +127,17 @@ ul{
           </div>
 	</c:forEach>
 
-        </div>
         <!-- /.row -->
+        </div>
 	
-      </div>
       <!-- /.col-lg-9 -->
+      </div>
 
-    </div>
     <!-- /.row -->
+    </div>
 
-  </div>
   <!-- /.container -->
+  </div>
 
   <!-- Footer(하단) -->
  <%@ include file="/WEB-INF/views/include/footer.jsp" %>

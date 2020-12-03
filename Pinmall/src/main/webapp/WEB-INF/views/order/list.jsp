@@ -12,6 +12,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <meta name="description" content="">
   <meta name="author" content="">
+  <%-- Handlebar Template --%>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/3.0.1/handlebars.js"></script>
 
   <title>PinMall Homepage</title>
 
@@ -31,7 +33,15 @@ ul{
    padding-left:0px;
    text-align: left;
    }
+.pt-5, .py-5 {
 
+   width:100%;
+   height:100px;
+   position:absolute;
+   bottom:0;
+   text-align: center;
+
+}
 
 </style>
 	

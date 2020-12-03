@@ -3,7 +3,9 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <script id="subCGListTemplate" type="text/x-handlebars-template">
 	{{#each .}}
-		<li  style="padding-left: 50px"><a href="/product/list?cate_ncategory={{cate_ncategory}}"><span>{{cate_categoryname}}</span><br /></a></li>
+		<li class="delete"  style="padding-left: 50px">
+			<a href="/product/list?cate_ncategory={{cate_ncategory}}"><span>{{cate_categoryname}}</span><br /></a>
+		</li>
 	{{/each}}
 </script>
 
@@ -11,9 +13,7 @@
 <script>
 	$(document).ready(function(){
 		
-		
-		
-		$("#mainCategory").one("click", function(){
+		$(".mainCategory").on("click", function(){
 			var mainCGCode= $(this).val();
 			var url = "/product/subCGList/" + mainCGCode; 
 		
@@ -29,6 +29,7 @@
 		var template = Handlebars.compile(templateObject.html());
 		var options = template(subCGStr);
 		
+		$(".delete").remove();
 		target.append(options);
 	}
 </script>
@@ -41,13 +42,13 @@
 	<h3 class="my-4">MENU</h3>
                 <ul >
 				<c:forEach items="${userCategoryList}" var="list">
-					<li id="mainCategory" class="mainCategory"  value="${list.cate_ncategory}">
+					<li id="mainCategory_${list.cate_ncategory}" class="mainCategory"  value="${list.cate_ncategory}">
 					
 						<a class="list-group-item" href="#">
 							<span>${list.cate_categoryname}</span><br />
 						</a>
 						<!-- 2차카테고리 목록 추가되는 장소 id="mainCategory_ + 1차카테고리 코드 -->
-						<ul  id="mainCategory_${list.cate_ncategory}"></ul>
+						<ul id="mainCategory_${list.cate_ncategory}"></ul>
 					</li>
 				</c:forEach>
 			</ul>

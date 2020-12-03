@@ -21,7 +21,6 @@ public class PageMaker {
 	public void setCri(Criteria cri) {
 		this.cri = cri;
 	}
-
 	
 	public void setTotalCount(int totalCount) {
 		this.totalCount = totalCount;
@@ -74,10 +73,8 @@ public class PageMaker {
 	public Criteria getCri() {
 		return cri;
 	}
-	
 	/*
 	 * page와 perPageNum 을 이용한 쿼리스트링을 생성 후 반환
-	 * 
 	 * @return
 	 * String : ex)?page=1&perPageNum=5
 	 */
@@ -91,10 +88,8 @@ public class PageMaker {
 		
 		return uriComponents.toUriString();
 	}
-
 	/*
 	 * 페이지 정보와 검색조건을 이용한 쿼리스트링을 생성 후 반환
-	 * 
 	 * @return
 	 * String : ex)?page=1&perPageNum=5&searchType=all&keyword=3
 	 */

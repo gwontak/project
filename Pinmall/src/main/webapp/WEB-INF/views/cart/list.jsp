@@ -11,9 +11,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <meta name="description" content="">
   <meta name="author" content="">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <%-- Handlebar Template --%>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/3.0.1/handlebars.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/3.0.1/handlebars.js"></script> 
   <title>PinMall Homepage</title>
 
   <!-- Bootstrap core CSS -->
@@ -34,7 +33,15 @@ ul{
    text-align: left;
    }
 
+.pt-5, .py-5 {
 
+   width:100%;
+   height:100px;
+   position:absolute;
+   bottom:0;
+   text-align: center;
+
+}
 </style>
 	
 </head>
@@ -113,6 +120,8 @@ ul{
 					</table>
 				</form>
 				</div>
+				
+				<div class="row"> 
 					<table>	
 							<tr>
 								<td colspan="5" class="text-left" style="text-align:left;"></td>
@@ -125,10 +134,17 @@ ul{
 					</table>
 				
 				</div>
-				</div>
-			</div>
-			</div>
+	    <!-- /.row -->
+		</div>
+		
+	  <!-- /.col-lg-9 -->	
+	   </div>
+	
+    <!-- /.row -->
+    </div>
 
+<!-- /.container -->
+ </div>
 
   <!-- Footer(하단) -->
  <%@ include file="/WEB-INF/views/include/footer.jsp" %>

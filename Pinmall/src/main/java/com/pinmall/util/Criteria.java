@@ -9,7 +9,7 @@ public class Criteria {
 	private int rowStart;		// 행 시작
 	private int rowEnd;			// 행 끝
 
-//	private String cat_id;	// 카테고리 코드
+  //	private String cat_id;	// 카테고리 코드
 	
 	public Criteria() 	// 기본 설정
 	{

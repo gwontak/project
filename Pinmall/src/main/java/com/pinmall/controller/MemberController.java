@@ -89,7 +89,7 @@ public class MemberController {
 		
 		logger.info(vo.toString());
 		service.join(vo);
-		redirect.addFlashAttribute("msg", "REGISTER_SUCCES");
+		redirect.addFlashAttribute("msg", "REGISTER_SUCCESS");
 		
 		
 		return "redirect:/";
